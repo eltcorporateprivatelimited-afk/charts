@@ -601,7 +601,8 @@ body {
     position: relative;
     overflow: hidden;
     transition: transform 0.3s ease;
-    margin-top: 28px; /* space below navigation bar */
+    margin: auto 0; /* Centers the card vertically with equal top/bottom space */
+    z-index: 5;
 }
 
 .ticket-card:hover {
@@ -783,33 +784,21 @@ body {
 
 /* Validation pill at bottom of phone */
 .validation-pill {
-    background-color: var(--ticket-validated-bg);
-    border: 1.2px solid var(--ticket-validated-border);
-    color: var(--ticket-validated-text);
-    padding: 9px 18px;
+    background-color: #ffffff; /* Solid clean white box */
+    border: 1px solid #b8cdd6; /* Clean thin border */
+    color: #a82e2e; /* Red/maroon validity text color */
+    padding: 9px 20px;
     border-radius: 7px;
     font-family: var(--font-ui);
     font-weight: 600;
     font-size: 0.78rem;
     text-align: center;
-    margin-top: 20px;
     width: 100%;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* Clean soft shadow */
     letter-spacing: -0.1px;
-    animation: pulse-glow 2.5s infinite ease-in-out;
-}
-
-/* Home Indicator for device */
-.phone-home-indicator {
-    width: 120px;
-    height: 4.5px;
-    background-color: rgba(255, 255, 255, 0.5);
-    border-radius: 10px;
-    position: absolute;
-    bottom: 8px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 100;
+    margin-top: auto; /* Push to the very bottom center */
+    margin-bottom: 20px; /* Space from the bottom edge */
+    z-index: 10;
 }
 
 .preview-actions {
