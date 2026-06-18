@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delhi Bus E-Ticket Booking Portal</title>
+    <!-- Google Fonts for Modern Premium Look -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        
+        <!-- View 1: Booking Dashboard View -->
+        <div id="booking-view" class="view-panel">
+            <header class="app-header">
+                <div class="logo-area">
+                    <span class="logo-icon">🚌</span>
+                    <h1>Delhi Transit E-Ticketing</h1>
+                </div>
+                <p class="subtitle">ONDC Network Digital Ticketing System</p>
+            </header>
+
+            <section class="booking-panel">
+                <div class="panel-header">
+                    <h2>Ticket Configuration</h2>
+                    <p>Enter the ticket details below. Once booked, it will generate a full-screen ticket view.</p>
+                </div>
+                
+                <form id="booking-form" onsubmit="event.preventDefault();">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="route-input">Bus Route</label>
+                            <div class="input-with-icon">
+                                <span class="input-icon">🛣️</span>
+                                <input type="text" id="route-input" value="OMS+UNSK" placeholder="e.g. OMS+UNSK, 502, 727" required autocomplete="off">
+                            </div>
+                            <div class="suggestions-list" id="route-suggestions"></div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="tickets-input">Number of Tickets</label>
+                            <div class="input-with-icon">
+                                <span class="input-icon">🎟️</span>
+                                <select id="tickets-input">
+                                    <option value="1" selected>1 Ticket</option>
+                                    <option value="2">2 Tickets</option>
+                                    <option value="3">3 Tickets</option>
+                                    <option value="4">4 Tickets</option>
+                                    <option value="5">5 Tickets</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="start-stop">Starting Stop</label>
+                            <div class="input-with-icon">
+                                <span class="input-icon">🟢</span>
+                                <input type="text" id="start-stop" value="Shaheed Captain Vikram Batra Flyover" placeholder="Starting stop name" required autocomplete="off">
+                            </div>
+                            <div class="suggestions-list" id="start-suggestions"></div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="end-stop">Ending Stop</label>
+                            <div class="input-with-icon">
+                                <span class="input-icon">🔴</span>
+                                <input type="text" id="end-stop" value="Burari Crossing" placeholder="Ending stop name" required autocomplete="off">
+                            </div>
+                            <div class="suggestions-list" id="end-suggestions"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="fare-select">Base Fare Per Ticket (₹)</label>
+                            <div class="input-with-icon">
+                                <span class="input-icon">💰</span>
+                                <select id="fare-select">
+                                    <option value="5">₹5.0 (Non-AC Short)</option>
+                                    <option value="10" selected>₹10.0 (Standard Non-AC / AC Short)</option>
+                                    <option value="15">₹15.0 (Standard Non-AC Long)</option>
+                                    <option value="20">₹20.0 (AC Medium)</option>
+                                    <option value="25">₹25.0 (AC Long Route)</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="booking-time-input">Booking Time</label>
+                            <div class="input-with-icon">
+                                <span class="input-icon">⏰</span>
+                                <input type="datetime-local" id="booking-time-input">
+                            </div>
+                            <button type="button" id="btn-current-time" class="btn-secondary-sm">Set Current Time</button>
+                        </div>
+                    </div>
+
+                    <div class="price-breakdown">
+                        <div class="price-item">
+                            <span>Base Fare Total:</span>
+                            <span id="base-total-val">₹10.00</span>
+                        </div>
+                        <div class="price-item discount">
+                            <span>ONDC Digital Discount (7.5%):</span>
+                            <span id="discount-val">-₹0.75</span>
+                        </div>
+                        <hr class="price-divider">
+                        <div class="price-item total">
+                            <span>Amount Paid:</span>
+                            <span id="paid-total-val">₹9.25</span>
+                        </div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button type="button" id="btn-random-ticket" class="btn-secondary">🎲 Randomize</button>
+                        <button type="button" id="btn-print" class="btn-primary">⚡ Book New Ticket</button>
+                    </div>
+                </form>
+
+                <div class="shortcut-tips">
+                    <h3>💡 Quick Presets</h3>
+                    <div class="preset-badges">
+                        <span class="preset-tag" data-route="OMS" data-start="Uttam Nagar Terminal" data-end="Anand Vihar ISBT" data-fare="25">OMS Route</span>
+                        <span class="preset-tag" data-route="502" data-start="Mehrauli Terminal" data-end="Kashmere Gate ISBT" data-fare="20">502 (AC)</span>
+                        <span class="preset-tag" data-route="727" data-start="Dwarka Sector 21" data-end="Jawaharlal Nehru Stadium" data-fare="25">727 Route</span>
+                        <span class="preset-tag" data-route="419" data-start="Ambedkar Nagar Terminal" data-end="Old Delhi Railway Station" data-fare="15">419 Route</span>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- View 2: Full-screen E-Ticket View -->
+        <div id="ticket-view" class="view-panel hidden">
+            <!-- Screen container (Centered on PC, full screen on phone - no borders) -->
+            <div class="phone-viewport">
+                <!-- Status Bar -->
+                <div class="status-bar">
+                    <span class="status-time" id="status-clock">07:06 PM</span>
+                    <div class="status-icons">
+                        <svg class="status-icon-svg" viewBox="0 0 24 24" width="16" height="16">
+                            <path fill="currentColor" d="M12 3c-4.97 0-9 4.03-9 9 0 2.12.74 4.07 1.97 5.61L4.35 19.4c-.39.39-.39 1.02 0 1.41.39.39 1.02.39 1.41 0l1.9-1.9C9.13 19.58 10.53 20 12 20c4.97 0 9-4.03 9-9s-4.03-9-9-9zm0 15c-3.31 0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6-2.69 6-6 6z"/>
+                        </svg>
+                        <svg class="status-icon-svg" viewBox="0 0 24 24" width="16" height="16">
+                            <path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+                        </svg>
+                        <div class="battery-icon">
+                            <div class="battery-level" style="width: 88%;"></div>
+                        </div>
+                        <span class="battery-percentage">88%</span>
+                    </div>
+                </div>
+
+                <!-- Realistic App Navigation Bar - Left, Center, Right Grid -->
+                <div class="app-top-nav">
+                    <div class="nav-left">
+                        <button type="button" id="btn-close-app" class="btn-close-app" title="Go back">
+                            <svg viewBox="0 0 24 24" width="18" height="18">
+                                <path fill="currentColor" d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="nav-center">
+                        <span class="warning-icon">⚠️</span>
+                        <span class="nav-title-text">Issue with ticket?</span>
+                    </div>
+                    <div class="nav-right">
+                        <span class="nav-link-action">View all tickets</span>
+                    </div>
+                </div>
+
+                <!-- Ticket App Screen Content -->
+                <div class="ticket-app-content">
+                    <!-- Ticket Card Container -->
+                    <div class="ticket-card" id="ticket-card-el">
+                        <!-- Card Header -->
+                        <div class="ticket-header-container">
+                            <h3 class="ticket-header-title">Transport Dept. of Delhi</h3>
+                            <div class="ticket-header-fare-row">
+                                <span class="ticket-header-fare" id="ticket-top-fare">₹9.25</span>
+                            </div>
+                        </div>
+                        
+                        <div class="ticket-divider"></div>
+                        
+                        <!-- Card Details Grid -->
+                        <div class="ticket-details">
+                            <div class="detail-row">
+                                <div class="detail-cell text-left route-cell">
+                                    <span class="detail-label">Bus Route</span>
+                                    <span class="detail-value" id="ticket-route">OMS+UNSK</span>
+                                </div>
+                                <div class="detail-cell text-right fare-cell">
+                                    <span class="detail-label">Fare</span>
+                                    <span class="detail-value" id="ticket-base-fare">₹10.0</span>
+                                </div>
+                            </div>
+                            
+                            <div class="detail-row booking-time-row">
+                                <div class="detail-cell text-left date-cell">
+                                    <span class="detail-label">Booking Time</span>
+                                    <span class="detail-value" id="ticket-booking-time">13 Jun, 26 | 07:06 PM</span>
+                                </div>
+                                <div class="detail-cell text-right count-cell">
+                                    <span class="detail-label">Tickets</span>
+                                    <span class="detail-value" id="ticket-count">1</span>
+                                </div>
+                            </div>
+                            
+                            <div class="detail-row span-full">
+                                <span class="detail-label">Starting stop</span>
+                                <span class="detail-value" id="ticket-start-stop">Shaheed Captain Vikram Batra Flyover</span>
+                            </div>
+                            
+                            <div class="detail-row span-full">
+                                <span class="detail-label">Ending stop</span>
+                                <span class="detail-value" id="ticket-end-stop">Burari Crossing</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Ticket Code / Hash -->
+                        <div class="ticket-hash" id="ticket-hash-code">
+                            T1306202676f7344cd5
+                        </div>
+                        
+                        <!-- Show QR Button -->
+                        <button type="button" class="btn-show-qr" id="btn-show-qr">
+                            <svg class="qr-btn-icon" viewBox="0 0 24 24" width="18" height="18">
+                                <path fill="currentColor" d="M3 3h8v8H3V3zm2 2v4h4V5H5zm8-2h8v8h-8V3zm2 2v4h4V5h-4zM3 13h8v8H3v-8zm2 2v4h4v-4H5zm13-2h3v2h-3v-2zm-3 3h3v3h-3v-3zm3 3h3v2h-3v-2zm-3-3h-3v-3h3v3zm3-3h-3V13h3v2z"/>
+                            </svg>
+                            Show QR code
+                        </button>
+                        
+                        <!-- Ultra-compressed ONDC Logo SVG - perfectly proportional -->
+                        <div class="ondc-brand-container">
+                            <svg class="ondc-logo-svg" viewBox="0 0 38 16" width="38" height="16" xmlns="http://www.w3.org/2000/svg">
+                                <!-- O -->
+                                <circle cx="5" cy="8" r="4.2" fill="none" stroke="#007cc2" stroke-width="2.2"/>
+                                
+                                <!-- N -->
+                                <path d="M12.5 12.5 V3.5 L17.5 12.5 V3.5" fill="none" stroke="#007cc2" stroke-width="2.2" stroke-linecap="square" stroke-linejoin="miter"/>
+                                
+                                <!-- D with target embedded inside -->
+                                <path d="M22 3.5 H25.5 C28 3.5 29.5 5 29.5 8 C29.5 11 28 12.5 25.5 12.5 H22 V3.5 Z" fill="none" stroke="#007cc2" stroke-width="2.2" stroke-linejoin="round"/>
+                                <!-- Target circle inside D centered at cx=25.2, cy=8 -->
+                                <circle cx="25.2" cy="8" r="1.9" fill="#f58220"/>
+                                <circle cx="25.2" cy="8" r="1.3" fill="#ffffff"/>
+                                <circle cx="25.2" cy="8" r="0.8" fill="#4fa83d"/>
+                                <!-- Nodes -->
+                                <line x1="25.2" y1="8" x2="22.7" y2="5.2" stroke="#007cc2" stroke-width="0.7"/>
+                                <circle cx="22.7" cy="5.2" r="0.5" fill="#007cc2"/>
+                                <line x1="25.2" y1="8" x2="28" y2="4.8" stroke="#007cc2" stroke-width="0.7"/>
+                                <circle cx="28" cy="4.8" r="0.5" fill="#007cc2"/>
+                                <line x1="25.2" y1="8" x2="22.3" y2="10.5" stroke="#007cc2" stroke-width="0.7"/>
+                                <circle cx="22.3" cy="10.5" r="0.5" fill="#007cc2"/>
+                                <!-- Clicking Cursor pointer arrow -->
+                                <path d="M26.2 9.2 L25.1 8 L25.9 7.7 Z" fill="#2d2d2d" stroke="#ffffff" stroke-width="0.2"/>
+                                <line x1="25.5" y1="8.5" x2="26.3" y2="10.2" stroke="#2d2d2d" stroke-width="0.4"/>
+
+                                <!-- C -->
+                                <path d="M37 5 C34.5 2.5 32 3.5 32 8 C32 12.5 34.5 13.5 37 11" fill="none" stroke="#007cc2" stroke-width="2.2" stroke-linecap="round"/>
+                            </svg>
+                            <span class="ondc-network-text">NETWORK</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Validated Pill at the Bottom of Screen -->
+                    <div class="validation-pill" id="ticket-validated-pill">
+                        Validated At: 13 Jun, 26 | 07:06 PM
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- QR Code Modal Dialog -->
+    <div class="modal-overlay" id="qr-modal">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3>Delhi Transit Ticket QR</h3>
+                <button type="button" class="modal-close" id="btn-close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p class="modal-desc">Present this QR to the conductor for scanning.</p>
+                <div class="qr-code-container">
+                    <canvas id="qr-canvas" width="200" height="200"></canvas>
+                </div>
+                <div class="modal-ticket-info">
+                    <div class="modal-info-row">
+                        <span>Route:</span>
+                        <strong id="modal-route">OMS+UNSK</strong>
+                    </div>
+                    <div class="modal-info-row">
+                        <span>Tickets:</span>
+                        <strong id="modal-tickets">1 Ticket</strong>
+                    </div>
+                    <div class="modal-info-row">
+                        <span>Fare Paid:</span>
+                        <strong id="modal-fare">₹9.25</strong>
+                    </div>
+                    <div class="modal-info-row">
+                        <span>ID:</span>
+                        <code id="modal-hash">T1306202676f7344cd5</code>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-primary" id="btn-close-modal-ok">Done</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
