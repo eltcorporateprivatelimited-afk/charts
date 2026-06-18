@@ -428,7 +428,7 @@ body {
 /* 4. Full-screen Viewport Container - NO PHONE BEZEL */
 .phone-viewport {
     width: 100%;
-    max-width: 380px;
+    max-width: 400px; /* Scaled up viewport width on desktop */
     height: 100vh;
     max-height: 812px;
     background-color: #2d3b42; /* Clean Solid Dark Slate Teal background from image */
@@ -582,7 +582,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 12px 14px 24px 14px; /* Reduced side padding so card can expand wider */
+    padding: 12px 16px 24px 16px; /* Optimized side padding */
     overflow-y: auto;
     position: relative;
     width: 100%;
@@ -591,17 +591,18 @@ body {
 /* The Ticket Container itself */
 .ticket-card {
     width: 100%;
-    max-width: 352px; /* Expands to almost fill the 380px container width */
+    max-width: 368px; /* Expanded card width to look larger */
     background-color: var(--ticket-bg);
-    border-radius: 10px; /* Restored original corner radius */
-    padding: 16px 14px; /* Restored original spacious padding */
+    border-radius: 10px;
+    padding: 18px 16px; /* Increased padding for spacious feel */
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
     display: flex;
     flex-direction: column;
     position: relative;
     overflow: hidden;
     transition: transform 0.3s ease;
-    margin: auto 0; /* Centers the card vertically with equal top/bottom space */
+    margin-top: 45px; /* Pushes the entire card + validation pill group down from top nav bar */
+    margin-bottom: 20px; /* Space between card and validation box */
     z-index: 5;
 }
 
@@ -621,7 +622,7 @@ body {
 
 .ticket-header-title {
     font-family: var(--font-ui);
-    font-size: 0.92rem;
+    font-size: 0.98rem; /* Scaled up title size */
     font-weight: 500; /* Thinner weight for 'Transport Dept. of Delhi' */
     color: var(--ticket-text-dark);
     text-align: center;
@@ -637,7 +638,7 @@ body {
 
 .ticket-header-fare {
     font-family: var(--font-ui);
-    font-size: 0.92rem;
+    font-size: 0.98rem; /* Scaled up fare size */
     font-weight: 500; /* Match title weight (not bold) */
     color: var(--ticket-text-dark);
 }
@@ -698,14 +699,14 @@ body {
 }
 
 .detail-label {
-    font-size: 0.72rem;
+    font-size: 0.76rem; /* Scaled up label size */
     color: var(--ticket-text-gray);
     font-weight: 500;
     margin-bottom: 2px;
 }
 
 .detail-value {
-    font-size: 0.86rem;
+    font-size: 0.90rem; /* Scaled up detail value size */
     color: var(--ticket-text-dark);
     font-weight: 500; /* Regular/Medium weight (not bold) */
     line-height: 1.25;
@@ -714,7 +715,7 @@ body {
 /* Ticket Hash/Transaction Code */
 .ticket-hash {
     font-family: monospace;
-    font-size: 0.75rem;
+    font-size: 0.78rem; /* Scaled up hash code size */
     color: var(--ticket-text-gray);
     text-align: center;
     margin-top: 18px;
@@ -796,8 +797,8 @@ body {
     width: 100%;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* Clean soft shadow */
     letter-spacing: -0.1px;
-    margin-top: auto; /* Push to the very bottom center */
-    margin-bottom: 20px; /* Space from the bottom edge */
+    margin-top: 0; /* Flows naturally under the card, no auto margin separation */
+    margin-bottom: 25px; /* Space from the bottom edge */
     z-index: 10;
 }
 
