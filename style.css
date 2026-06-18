@@ -582,7 +582,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 12px 22px 24px 22px; /* Squeeze card width with padding */
+    padding: 12px 14px 24px 14px; /* Reduced side padding so card can expand wider */
     overflow-y: auto;
     position: relative;
     width: 100%;
@@ -591,17 +591,17 @@ body {
 /* The Ticket Container itself */
 .ticket-card {
     width: 100%;
-    max-width: 335px; /* Shrink ticket card size */
+    max-width: 352px; /* Expands to almost fill the 380px container width */
     background-color: var(--ticket-bg);
-    border-radius: 8px; /* Tighter corners matching image */
-    padding: 12px 14px; /* Reduced card padding to make it smaller/compact */
+    border-radius: 10px; /* Restored original corner radius */
+    padding: 16px 14px; /* Restored original spacious padding */
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
     display: flex;
     flex-direction: column;
     position: relative;
     overflow: hidden;
     transition: transform 0.3s ease;
-margin-top:42px;
+    margin-top: 28px; /* space below navigation bar */
 }
 
 .ticket-card:hover {
