@@ -645,7 +645,7 @@ body {
 
 .ticket-divider {
     width: 100%;
-    height: 0.5px;
+    height: 0.9px;
     border-top: 0.5px solid black;
     margin-top: 6px; /* space above underline */
     margin-bottom: 14px; /* space below underline */
