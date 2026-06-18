@@ -458,65 +458,7 @@ body {
     }
 }
 
-/* Phone Status Bar */
-.status-bar {
-    height: 38px;
-    padding: 12px 22px 0 22px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    color: #ffffffd0;
-    font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: -0.2px;
-    z-index: 90;
-    user-select: none;
-}
 
-.status-icons {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-}
-
-.status-icon-svg {
-    opacity: 0.85;
-}
-
-.battery-icon {
-    width: 18px;
-    height: 9px;
-    border: 1px solid rgba(255, 255, 255, 0.8);
-    border-radius: 2.5px;
-    padding: 1px;
-    display: flex;
-    align-items: center;
-    position: relative;
-}
-
-.battery-icon::after {
-    content: '';
-    width: 1.5px;
-    height: 4px;
-    background-color: rgba(255, 255, 255, 0.8);
-    border-top-right-radius: 1px;
-    border-bottom-right-radius: 1px;
-    position: absolute;
-    right: -2.5px;
-    top: 50%;
-    transform: translateY(-50%);
-}
-
-.battery-level {
-    height: 100%;
-    background-color: #fff;
-    border-radius: 1px;
-}
-
-.battery-percentage {
-    font-size: 0.7rem;
-    opacity: 0.85;
-}
 
 /* App Navigation Header Bar - Center Warning, Right Link */
 .app-top-nav {
