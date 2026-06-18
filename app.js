@@ -39,8 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const ticketView = document.getElementById('ticket-view');
     const btnCloseApp = document.getElementById('btn-close-app');
     
-    // DOM Elements - Status Bar & Presets
-    const statusClock = document.getElementById('status-clock');
+    // DOM Elements - Presets
     const presetTags = document.querySelectorAll('.preset-tag');
     const routeSuggestions = document.getElementById('route-suggestions');
     const startSuggestions = document.getElementById('start-suggestions');
@@ -90,8 +89,7 @@ document.addEventListener('DOMContentLoaded', () => {
         setBookingTimeToNow();
         // Update all ticket calculations
         updateCalculationsAndPreview();
-        // Start live clock for phone status bar
-        startPhoneClock();
+
         // Generate initial ticket hash code
         regenerateTicketHash();
         // Set up autocomplete events
@@ -161,19 +159,7 @@ document.addEventListener('DOMContentLoaded', () => {
         playBeep(800, 100);
     });
 
-    function startPhoneClock() {
-        function updateClock() {
-            const now = new Date();
-            let hours = now.getHours();
-            const minutes = String(now.getMinutes()).padStart(2, '0');
-            const ampm = hours >= 12 ? 'PM' : 'AM';
-            hours = hours % 12;
-            hours = hours ? hours : 12; // 0 should be 12
-            statusClock.textContent = `${hours}:${minutes} ${ampm}`;
-        }
-        updateClock();
-        setInterval(updateClock, 60000); // Update every minute
-    }
+
 
     // Format: "13 Jun, 26 | 07:06 PM"
     function formatTicketDate(date) {
